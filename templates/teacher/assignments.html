@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <h2>ASSIGNMENTS</h2>
+            </div>
+            <div class="col-sm-4 col-md-4" >
+                <a data-toggle="modal" data-target="#assignmentsModal" class="btn btn-primary btn-primary" style="float:right;"><span class="glyphicon glyphicon-arrow-up"></span> Upload Assignment</a>
+            </div>
+        </div>
+        <div class="row" style="padding: 20px 0px 20px 0px;">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-center">
+                    <div class="searchbar">
+                        <input id='myInput' onkeyup='searchTable()' class="search_input" type="text" name="search" placeholder="Search...">
+                        <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover table-fixed" id = "myTable">
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Subject</th>
+                    <th>Class</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for val in assignments %}
+                <tr>
+                    <td>{{val.title}}</td>
+                    <td>{{ val.subject }}</td>
+                    <td>{{ val.section }}</td>
+                    <td>{{ val.due_date.date }}</td>
+                    <td><a href="{{ val.assignment_file.url }}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i></a>
+                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+</div>
+<!-- Modal -->
+                <div class="modal fade" id="assignmentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+
+
+                            {{ form.as_p }}
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                      </div>
+                    </div>
+                  </div>
+                      </form>
+                </div>
+<!--                End Modal -->
+<script>
+ function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[0].style.display = "";
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+</script>
+{% endblock %}

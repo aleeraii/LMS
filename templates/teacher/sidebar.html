@@ -1,0 +1,14 @@
+{% if user.is_authenticated %}
+<div class="navigation">
+    <ul>
+        {% for role in roles %}
+        {% with "functionalities/"|add:role|add:".html" as template %}
+        {% include template %}
+        {% endwith %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+

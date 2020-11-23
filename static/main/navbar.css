@@ -1,0 +1,94 @@
+body
+  {
+      min-height: 100%;
+  }
+  .navigation
+  {
+      position: fixed;
+      width: 100px;
+      height: 100%;
+      background: #111;
+      top: 50px;
+      transition: 0.5s;
+      overflow: hidden;
+      margin-left: -50px;
+  }
+  .navigation:hover
+  {
+      width:260px;
+  }
+
+  .navigation ul{
+      position: absolute;
+      top: 15px;
+      left: 0;
+      width: 100%;
+  }
+  .navigation ul li{
+      position: relative;
+      width: 100%;
+      list-style: none;
+  }
+
+  .navigation ul li:hover{
+      color: #fff;
+  }
+
+  .navigation ul li a:hover{
+      background: transparent;
+      color: #fff; }
+
+  .navigation ul li a{
+      position: relative;
+      display: block;
+      width: 100%;
+      display: flex;
+      text-decoration: none;
+      color: #989898;
+  }
+  .navigation ul li a .icon{
+      position: relative;
+      display: block;
+      min-width: 71px;
+      height: 50px;
+      line-height: 25px;
+      text-align: center;
+  }
+
+  .navigation ul li a .icon .glyph1{
+      font-size: 19px;
+  }
+  .navigation ul li a .title{
+      font-size: 17px;
+  }
+
+  .navigation ul li a .title{
+      position: relative;
+      display: block;
+      padding : 0 10px;
+      height: 50px;
+      line-height: 25px;
+      text-align: start;
+      transition: 0.5s;
+      white-space: nowrap;
+  }
+  table, th, td {
+  border: 1px solid black;
+}
+.main {
+  margin-top:70px;
+  margin-left: 100px;
+  width:75%;
+  transition: 0.5s;
+}
+.navigation:hover + .main{
+    margin-left: 250px;
+     transition: 0.5s;
+}
+ nav-top{
+   position: fixed;
+ }
+ .form1{
+    width: 70%;
+ }
+

@@ -1,0 +1,127 @@
+.dashboard-home-buttons {
+    padding:10px;
+}
+
+.dashboard-buttons {
+    height: 80px;
+    width:350px;
+}
+.dashboard-details {
+    display:none;
+    margin:10px;
+}
+.timetable-table {
+    table-layout: fixed;
+    width:100%;
+    word-break: break-all;
+    text-align: center;
+    border:none;
+    cellspacing:0;
+    cellpadding:0;
+    }
+table, tr, td {
+    text-align: center;
+    border:none;
+}
+
+.content-video-row {
+    overflow-x: auto;
+    white-space: nowrap;
+    display:block;
+
+}
+
+.content-video-plus-details {
+    display: inline-block;
+    float: none;
+    height: 100%;
+    width: 100%;
+    background-color: #d0d3d4;
+}
+
+.content-video > video {
+    width: 100%;
+    height: 100%;
+}
+
+.teacher-header {
+    background-color: #d0d3d4;
+}
+
+.content-rows {
+    padding:20px 0px 20px 0px;
+}
+
+@media print {
+  table {
+    border: 0 !important;
+  }
+
+}
+
+
+.searchbar{
+margin-bottom: auto;
+margin-top: auto;
+height: 60px;
+background-color: #353b48;
+border-radius: 30px;
+padding: 10px;
+}
+
+.search_input{
+width: 0;
+color: white;
+border: 0;
+outline: 0;
+background: none;
+caret-color:transparent;
+line-height: 40px;
+transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input{
+padding: 0 10px;
+width: 450px;
+caret-color:red;
+transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_icon{
+background: white;
+color: #e74c3c;
+}
+
+.search_icon{
+height: 40px;
+width: 40px;
+float: right;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 50%;
+color:white;
+text-decoration:none;
+}
+
+.outer-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+
+}
+
+.inner-scroll {
+    display: inline-block;
+    float: none;
+    background-color: #d0d3d4;
+    padding: 15px;
+}
+
+.scroll-buttons {
+    height: 100px;
+
+}
+
+.section-info {
+    display:none;
+}

@@ -1,0 +1,25 @@
+.dashboard-buttons {
+    height: 100px;
+    width:300px;
+    padding: 200px;
+    border: 10px solid red;
+}
+.dashboard-details {
+    display:none;
+    margin:10px;
+}
+.timetable-table {
+    table-layout: fixed;
+    width:100%;
+    word-break: break-all;
+    text-align: center;
+    border:none;
+    cellspacing:0;
+    cellpadding:0;
+table, tr, td {
+    text-align: center;
+}
+
+.dashboard-home-button {
+
+}

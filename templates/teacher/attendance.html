@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main">
+     <div class="container">
+<!--            {% for section in sections %}-->
+<!--          <button>{{section.class_id}}{{ section.section_name }}</button>-->
+<!--            {% endfor %}-->
+<!--            {% for student in students %}-->
+<!--                {{ student.user.username }}-->
+<!--            {% endfor %}-->
+         <div class="row">
+             <div class="col-md-8">
+                 <h1>ATTENDANCE</h1>
+             </div>
+         </div>
+                 <div class="row">
+                     <div class="col-md-1 alert alert-primary">No.</div>
+                     <div class="col-md-7 alert alert-primary">NAME</div>
+                     <div class="col-md-2 alert alert-primary">PRESENT</div>
+                     <div class="col-md-2 alert alert-primary">ABSENT</div>
+                 </div>
+             <form method="post" action="{% url 'teacher:mark_attendance' %}">
+                 {% csrf_token %}
+                 {% for student in students %}
+                 <div class="form-group row">
+                     <div class="col-md-1 ">{{ forloop.counter }}.</div>
+                     <div class="col-md-7 ">{{ student.user.username }}</div>
+                     <div class="col-md-2">
+                         <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{student.user.username}}" id="gridRadios1" value="Present" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                            Present
+                            </label>
+                         </div>
+                     </div>
+                     <div class="col-md-2">
+                         <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{student.user.username}}" id="gridRadios2" value="Absent">
+                            <label class="form-check-label" for="gridRadios2">
+                            Absent
+                            </label>
+                        </div>
+                     </div>
+                     </div>
+                     {% endfor %}
+                    <div class="form-group row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+             </form>
+     </div>
+</div>
+{% endblock %}

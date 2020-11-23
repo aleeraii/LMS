@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main">
+    <div class="container">
+        <div class="row teacher-header">
+            <div class="col-md-12 col-sm-12">
+                <h1>CONTENT</h1>
+            </div>
+        </div>
+        <div class="row teacher-header">
+            <div class="col-sm-12 col-md-6">
+                <p>You can use this helping material to assist you with anything related to students syllabus</p>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <input id='myInput' onkeyup='searchTable()' type="text" class="form-control form-control-sm" placeholder="Search here...">
+            </div>
+        </div>
+        {% for class_id in classes %}
+                <div class="row content-rows">
+                    <div class="col-md-12 col-sm-12" >
+                        <h2 style="color:DodgerBlue;">Class {{class_id}}</h2>
+                    </div>
+                </div>
+                <div class="row content-video-row">
+                    {% for video in album %}
+                    {% if class_id == video.grade %}
+                        <div class="col-sm-4 content-video-plus-details">
+                            <div class="content-video">
+                                <video width='300' autoplay="autoplay">
+                                    <source src='{{ video.video.url }}' type='video/mp4'>
+                                </video>
+                            </div>
+                            <div class="content-video-details">
+                                <h4><b>{{video.title}}</b></h4>
+                                <h4>Subject: {{video.subject}}</h4>
+<!--                                <p>Details: {{video.details}}</p>-->
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
