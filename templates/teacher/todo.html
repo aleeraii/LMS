@@ -4,7 +4,33 @@
 {% block content %}
 <div class="main">
     <div class="container-fluid">
-        TODO
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <h2>TO-DO LIST</h2>
+            </div>
+        </div>
+        <div>
+            <table class="table table-hover table-fixed">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Assigned BY</th>
+                        <th>Task</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for val in todo %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ val.assign_by }}</td>
+                        <td>{{ val.task }}</td>
+                        <td>{{ val.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock content %}

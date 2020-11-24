@@ -7,5 +7,6 @@ class TodoModel(models.Model):
     assign_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     task = models.CharField(max_length=500)
     date = models.DateTimeField()
+    create_date = models.DateTimeField(auto_now_add=True)
 
 

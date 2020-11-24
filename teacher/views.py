@@ -10,6 +10,7 @@ from school_class.models import ClassModel
 from attendance.models import AttendanceModel
 from teacher.models import TeacherModel, TeacherContentModel
 from timetable.models import TimeTableModel
+from todo.models import TodoModel
 from django.views.generic import CreateView
 from .forms import AddNotesForm, AddLectureForm, AddAssignmentForm, AddQuizForm, AddExamsForm
 
@@ -165,8 +166,8 @@ def students(request):
 
 
 def todo(request):
-    # exam = ExamModel.objects.all()
-    return render(request, "teacher/todo.html", context={'roles': roles})
+    todos = TodoModel.objects.filter(assign_to=request.user)
+    return render(request, "teacher/todo.html", context={'roles': roles, 'todo': todos})
 
 
 def timetable(request):

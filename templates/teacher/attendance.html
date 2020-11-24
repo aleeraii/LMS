@@ -25,7 +25,7 @@
                  {% csrf_token %}
                  {% for student in students %}
                  <div class="form-group row">
-                     <div class="col-md-1 ">{{ forloop.counter }}.</div>
+                     <div class="col-md-1 ">{{ forloop.counter }}</div>
                      <div class="col-md-7 ">{{ student.user.username }}</div>
                      <div class="col-md-2">
                          <div class="form-check">
