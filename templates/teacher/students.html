@@ -18,12 +18,10 @@
         <div class="row outer-scroll flex-row flex-nowrap">
                 {% for section in sections %}
                 <div class="col-md-4 inner-scroll">
-                    <a href="#" onclick="sectionInfo('{{section}}')" class="btn btn-block btn-info scroll-buttons"><h1>{{section}}</h1></a>
+                    <a onclick="sectionInfo('{{section}}')" class="btn btn-block btn-info scroll-buttons"><h1 style="padding:15px;color:white;">{{section}}</h1></a>
                 </div>
                 {% endfor %}
         </div>
-        <br>
-        <br>
         <div class="row">
             {% for section in sections %}
                 <div id="{{section}}" class="col-md-12 section-info">
@@ -41,60 +39,91 @@
                             <td>{{ student.user.first_name }}{{ student.user.phone_number }}</td>
                             <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
                             <td>{{ student.parent.user.first_name }} {{ student.parent.user.last_name }}</td>
-                            <td>View More ...</td>
+                            <td><a class="btn btn-primary" data-toggle="modal" data-target="#{{ student.user.username }}-details-modal">View More</a></td>
                         </tr>
                         </tbody>
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{ student.user.username }}-details-modal" role="dialog">
+                        <div class="modal-dialog modal-xl">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Student Information</h4>
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-lg alert alert-primary" role="alert">
+                                      Personal Information
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col col-md"><h5>Name: </h5></div>
+                                        <div class="col col-md"><p>{{ student.user.first_name }} {{ student.user.last_name }}</p></div>
+
+                                        <div class="col col-md"><h5>Contact Number: </h5></div>
+                                        <div class="col col-md"><p>{{ student.user.phone_number }}</p></div>
+
+                                </div>
+                                <div class="row">
+                                        <div class="col col-md"><h5>Father's Name: </h5></div>
+                                        <div class="col col-md"><p>{{ student.parent.user.first_name }} {{ student.parent.user.last_name }}</p></div>
+
+                                        <div class="col col-md"><h5>Email: </h5></div>
+                                        <div class="col col-md"><p>{{ student.user.email }}</p></div>
+
+                                </div>
+                                <div class="row">
+                                        <div class="col col-md"><h5>Address: </h5></div>
+                                        <div class="col col-md"><p>{{ student.user.address }}</p></div>
+
+                                        <div class="col col-md"></div>
+                                        <div class="col col-md"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg alert alert-primary" role="alert">
+                                      Academic Information
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col col-md"><h5>Class: </h5></div>
+                                        <div class="col col-md"><p>{{ student.section.class_id.class_grade }}</p></div>
+
+                                        <div class="col col-md">Section: </div>
+                                        <div class="col col-md">{{ student.section.section_name }}</div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                     {% endif %}
                     {% endfor %}
                 </table>
                 </div>
             {% endfor %}
         </div>
+
     </div>
 </div>
 <script>
-    function infoFunction() {
-  var x = document.getElementById("info_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
     function sectionInfo(section) {
-<!--    var y = document.getElementsByClassName("section-info");-->
-<!--    for (i = 0; i < y.length; i++){-->
-<!--        y[i].style.display === "none";-->
-<!--    }-->
-
+    var y = document.getElementsByClassName("section-info");
+    for(var i=0; i < y.length; i++){
+        y[i].style.display = "none";
+    }
     if (document.getElementById(section)) {
         var x = document.getElementById(section);
-        if (x.style.display === "none") {
-            x.style.display = "block";
-          }
-         else {
+        if (x.style.display === "block") {
             x.style.display = "none";
           }
+        else {
+        x.style.display = "block";
+        }
     }
 }
-<!--function changeDisplay(section) {-->
-<!--    if (document.getElementById(section)) {-->
-<!--        var x = document.getElementById(section);-->
-<!--        if (x.style.display === "none") {-->
-<!--            x.style.display = "block";-->
-<!--          }-->
-<!--         else {-->
-<!--            x.style.display = "none";-->
-<!--          }-->
-<!--    }-->
-<!--}-->
 
-<!--var temp = 'Data';-->
-<!--function sectionInfo(section) {-->
-<!--    changeDisplay(temp);-->
-<!--    temp = section;-->
-<!--    changeDisplay(section);-->
-<!--}-->
 </script>
 {% endblock content %}

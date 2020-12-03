@@ -13,15 +13,26 @@ from timetable.models import TimeTableModel
 from todo.models import TodoModel
 from django.views.generic import CreateView
 from .forms import AddNotesForm, AddLectureForm, AddAssignmentForm, AddQuizForm, AddExamsForm
-
+import datetime
 roles = ['Dashboard', 'Content', 'Attendence', 'Classes', 'Lectures', 'Assignment', 'Quiz',
          'Exam', 'Timetable', 'Todo', 'Queries', 'Notes']
 
 
 def dashboard(request):
+    # INFO
     teacher_data = TeacherModel.objects.all()
+    # NOTICE BOARD
     notices = NoticeBoardModel.objects.all()
-    return render(request, "teacher/dashboard.html", context={'roles': roles, 'notices': notices, 'teacher_data': teacher_data})
+    # TO-DO
+    todos = TodoModel.objects.filter(assign_to=request.user)
+    tasks = []
+    for task in todos:
+        if task.date.day == datetime.date.today().day:
+            tasks.append(task)
+    # ATTENDANCE
+    attendance = AttendanceModel.objects.all()
+
+    return render(request, "teacher/dashboard.html", context={'roles': roles, 'notices': notices, 'teacher_data': teacher_data, 'todos': tasks})
 
 
 def notes(request):
@@ -84,73 +95,25 @@ def lectures(request):
     return render(request, "teacher/lectures.html", context={'roles': roles, 'lectures': lecture, 'form': form})
 
 
-# def add_notes_view(request):
-#     if request.method == 'POST':
-#         form = AddNotesForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:notes')
-#     else:
-#         form = AddNotesForm()
-#
-#     return render(request, 'teacher/add_notes_form.html', {'form': form, 'roles': roles})
-
-
-# def add_lectures_view(request):
-#     if request.method == 'POST':
-#         form = AddLectureForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:lectures')
-#     else:
-#         form = AddLectureForm
-#     return render(request, 'teacher/lectures_form.html', {'form': form, 'roles': roles})
-
-
-# def add_assignment_view(request):
-#     if request.method == 'POST':
-#         form = AddAssignmentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:assignments')
-#     else:
-#         form = AddAssignmentForm
-#     return render(request, 'teacher/add_assignment_form.html', {'form': form, 'roles': roles})
-
-
-# def add_exams_view(request):
-#     if request.method == 'POST':
-#         form = AddExamsForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:exams')
-#     else:
-#         form = AddExamsForm
-#     return render(request, 'teacher/add_exams_form.html', {'form': form, 'roles': roles})
-
-
-# def add_quiz_view(request):
-#     if request.method == 'POST':
-#         form = AddQuizForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:quiz')
-#     else:
-#         form = AddQuizForm
-#     return render(request, 'teacher/add_quiz_form.html', {'form': form, 'roles': roles})
-
-
 def content(request):
     teacher = TeacherModel.objects.get(user=request.user)
     sections = SectionModel.objects.filter(class_teacher=teacher)
     album = TeacherContentModel.objects.all()
-    classes = []
+    classes = {}
     for section in sections:
-        if section.class_id in classes:
+        if section.class_id in classes.keys():
             pass
         else:
-            classes.append(section.class_id)
-    return render(request, "teacher/content.html", context={'roles': roles, 'album': album, 'classes': classes})
+            sub = []
+            for subject in section.subjects.all():
+                sub.append(subject.name)
+            classes[section.class_id] = sub
+    subjects = teacher.subjects.all()
+    videos = []
+    for video in album:
+        if video.grade in classes.keys():
+            videos.append(video)
+    return render(request, "teacher/content.html", context={'roles': roles, 'videos': videos, 'classes': classes, 'subjects': subjects, 'sections': sections})
 
 
 def students(request):
@@ -179,11 +142,18 @@ def attendance(request):
     teacher = TeacherModel.objects.get(user=request.user)
     sections = SectionModel.objects.filter(class_teacher=teacher)
     student_list = []
+    mark_attendance = True
     for section in sections:
         student = StudentModel.objects.filter(section=section)
         for stu in student:
             student_list.append(stu)
-    return render(request, "teacher/attendance.html", context={'roles': roles, 'sections': sections, 'students': student_list})
+            attendance = AttendanceModel.objects.filter(user_id=stu.user)
+            for attend in attendance:
+                if attend.date_time.date() == datetime.datetime.now().date():
+                    mark_attendance = False
+    print(mark_attendance)
+
+    return render(request, "teacher/attendance.html", context={'roles': roles, 'sections': sections, 'students': student_list, 'mark_attendance': mark_attendance})
 
 
 def mark_attendance(request):
@@ -208,11 +178,7 @@ def mark_attendance(request):
     return render(request, 'teacher/attendance.html', {'roles': roles})
 
 
-def delete_lecture(request, title=None):
-    if title:
-        obj = LectureModel.objects.get(title=title)
-        obj.delete()
-        return render(request, "teacher:lectures")
-    else:
-        print("Not Found")
-        return render(request, "teacher:lectures")
+def delete_lecture(request, id):
+    obj = LectureModel.objects.get(id=id)
+    obj.delete()
+    return redirect("teacher:lectures")

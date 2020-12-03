@@ -4,45 +4,150 @@
 {% block content %}
 <div class="main">
     <div class="container">
-        <div class="row teacher-header">
-            <div class="col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
                 <h1>CONTENT</h1>
             </div>
-        </div>
-        <div class="row teacher-header">
-            <div class="col-sm-12 col-md-6">
-                <p>You can use this helping material to assist you with anything related to students syllabus</p>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <input id='myInput' onkeyup='searchTable()' type="text" class="form-control form-control-sm" placeholder="Search here...">
+            <div class="col-sm-12 col-md-6" >
+                <input id='myInput' style="height:100%;border-radius: 20px;" onkeyup='searchVideo()' type="text" class="form-control form-control-sm" placeholder="Search Here...">
             </div>
         </div>
-        {% for class_id in classes %}
-                <div class="row content-rows">
-                    <div class="col-md-12 col-sm-12" >
-                        <h2 style="color:DodgerBlue;">Class {{class_id}}</h2>
+        <div id="accordion">
+          {% for class_id, subject in classes.items %}
+          <div class="card">
+              <a href="#" data-toggle="collapse" data-target="#collapse{{class_id}}" aria-expanded="true" aria-controls="collapse{{class_id}}">
+                    <div class="card-header" id="headingOne">
+                      <h5 class="mb-0">
+                          Class {{class_id}}
+                      </h5>
                     </div>
-                </div>
-                <div class="row content-video-row">
-                    {% for video in album %}
-                    {% if class_id == video.grade %}
-                        <div class="col-sm-4 content-video-plus-details">
-                            <div class="content-video">
-                                <video width='300' autoplay="autoplay">
-                                    <source src='{{ video.video.url }}' type='video/mp4'>
-                                </video>
-                            </div>
-                            <div class="content-video-details">
-                                <h4><b>{{video.title}}</b></h4>
-                                <h4>Subject: {{video.subject}}</h4>
-<!--                                <p>Details: {{video.details}}</p>-->
-                            </div>
+              </a>
+            <div id="collapse{{class_id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+<!--                    ######################-->
+                  <div id="accordion-sub">
+                      <div class="card">
+                          {% for teacher_subject in subjects %}
+                          {% if teacher_subject.name in subject %}
+                        <div class="card-header" id="heading1">
+                          <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{class_id}}{{teacher_subject.name}}" aria-expanded="true" aria-controls="collapse1">
+                              {{teacher_subject.name}}
+                            </button>
+                          </h5>
                         </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-        {% endfor %}
-
+                        <div id="collapse{{class_id}}{{teacher_subject.name}}" class="collapse" aria-labelledby="heading1" data-parent="#accordion-sub">
+                          <div class="card-body">
+                                 <div class="content-video-row">
+                                    {% for video in videos %}
+                                    {% if class_id == video.grade and video.subject == teacher_subject %}
+                                        <div class="col-sm-4 content-video-plus-details">
+                                            <div class="content-video">
+                                                <video width="300" height="100" controls poster="">
+                                                    <source src='{{ video.video.url }}' type='video/mp4'>
+                                                </video>
+                                            </div>
+                                            <div class="content-video-details">
+                                                <h5><b>{{video.title}}</b></h5>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                          </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+                  </div>
+<!--                  #########################-->
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+  </div>
+</div>
+<!--        {% for class_id, subject in classes.items %}-->
+<!--        <div class="row">-->
+<!--            <div class="dropdown">-->
+<!--                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">-->
+<!--                  Class {{class_id}}-->
+<!--                </button>-->
+<!--                <div class="dropdown-menu">-->
+<!--                    <h5 class="dropdown-header">Subjects</h5>-->
+<!--                    {% for teacher_subject in subjects %}-->
+<!--                    {% if teacher_subject.name in subject %}-->
+<!--                        <button type="button" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')" class="dropdown-item" data-toggle="collapse"  aria-expanded="false" >{{teacher_subject.name}}</button>-->
+<!--&lt;!&ndash;                        <a href="#" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')" class="dropdown-item" data-toggle="collapse"  aria-expanded="false" >{{teacher_subject.name}}</a>&ndash;&gt;-->
+<!--                    {% endif %}-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            {% for teacher_subject in subjects %}-->
+<!--            {% if teacher_subject.name in subject %}-->
+<!--            <div class="row content-video-row section-info" id="{{class_id}}{{teacher_subject.name}}">-->
+<!--                {% for video in videos %}-->
+<!--                {% if class_id == video.grade and video.subject == teacher_subject %}-->
+<!--                <div class="alert alert-primary" role="alert" data-toggle="collapse">-->
+<!--                    <b>{{teacher_subject.name}}</b>-->
+<!--                    <a href="#" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')"><p style="float:right;">Close</p></a>-->
+<!--                </div>-->
+<!--                    <div class="col-sm-4 content-video-plus-details">-->
+<!--                        <div class="content-video">-->
+<!--                            <video width="300" height="200" controls>-->
+<!--                                <source src='{{ video.video.url }}' type='video/mp4'>-->
+<!--                            </video>-->
+<!--                        </div>-->
+<!--                        <div class="content-video-details">-->
+<!--                            <h4><b>{{video.title}}</b></h4>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                {% endif %}-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--        {% endfor %}-->
     </div>
 </div>
+<script>
+    function videoDetails(video_id) {
+    if (document.getElementById(video_id)) {
+        var x = document.getElementById(video_id);
+        if (x.style.display === "block") {
+            x.style.display = "none";
+          }
+        else {
+        x.style.display = "block";
+        }
+    }
+}
+
+    function searchVideo() {
+        var input, filter, h5, i, j, found, body, txtValue;
+        input = document.getElementById('myInput');
+        console.log(input.value);
+        filter = input.value.toUpperCase();
+        body = document.getElementsByClassName("card-body");
+        for (i = 0; i < body.length; i++) {
+<!--            td = tr[i].getElementsByTagName("td");-->
+<!--            console.log(body[i]);-->
+            h5 = body[i].getElementsByTagName("h5");
+            for (j = 0; j < h5.length; j++) {
+                if (h5[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found) {
+                body[0].style.display = "";
+                body[i].style.display = "";
+                found = false;
+            } else {
+                body[i].style.display = "none";
+            }
+        }
+    }
+</script>
 {% endblock %}

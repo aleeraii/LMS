@@ -86,10 +86,12 @@
                             <th>Assigned By</th>
                             <th>Task</th>
                         </tr>
+                        {% for task in todos %}
                         <tr>
-                            <td>Principal</td>
-                            <td>Meet Me</td>
+                            <td>{{task.assign_by}}</td>
+                            <td>{{task.task}}</td>
                         </tr>
+                        {%endfor%}
                     </table>
                 </div>
             </div>
@@ -122,10 +124,10 @@
 <script>
     function infoFunction() {
   var x = document.getElementById("info_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
+  if (x.style.display === "block") {
     x.style.display = "none";
+  } else {
+    x.style.display = "block";
   }
 }
     function timetableFunction() {

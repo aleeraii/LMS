@@ -21,5 +21,5 @@ urlpatterns = [
     path('todo/', todo, name='todo'),
     path('timetable/', timetable, name='timetable'),
     path('mark_attendance/', mark_attendance, name='mark_attendance'),
-    path('delete/', delete_lecture, name='delete_lecture'),
+    path('delete/<int:id>', delete_lecture, name='delete_lecture'),
 ]

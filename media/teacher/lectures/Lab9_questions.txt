@@ -1,0 +1,445 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "colab_type": "text",
+    "id": "ZQ-tHjsZ7uCa"
+   },
+   "source": [
+    "# Lab 9 Questions"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "$\\color{red}{\\text{RULES:}}$\n",
+    "\n",
+    "1) Work individually! You may only ask questions to the Teaching Assistant.\n",
+    "\n",
+    "2) You can use the lecture notes (that are posted on D2L), but any other materials (e.g. books, web searches) are not allowed\n",
+    "\n",
+    "$\\color{red}{\\text{SUBMISSION:}}$\n",
+    "\n",
+    "Please submit your jupyter notebook to the corresponding dropbox in D2L using the naming convention STUDENTID_LASTNAME_FIRSTNAME_LAB_LABID.ipynb\n",
+    "\n",
+    "$\\color{red}{\\text{Not following the rules/submission guidelines will result in point deductions!}}$"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "colab_type": "text",
+    "id": "miOhrnrV7uCc"
+   },
+   "source": [
+    "### Question 1"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Consider the task of predicting automobile fuel efficiency, which is characterized by miles per gallon (mpg) metric. The data file \"auto_mpg.csv\" contains the instances for this task.\n",
+    "- (1.a) Read the csv file, and store it as a pandas dataframe named \"df_mpg\"\n",
+    "- (1.b) Clean the data, convert categorical features to numerical ones and handle the missing values by replacing them with the column/feature averages (i.e. mode). \n",
+    "\n",
+    "> Hint1: In loan prediction task, for the 'LoanAmount' feature, we used **df_lp['LoanAmount'].fillna(df_lp['LoanAmount'].mode()[0], inplace=True)** to replace missing values. \n",
+    "\n",
+    "> Hint2: In loan prediction task, for the 'Gender' feature, we used **df_lp['Gender'] =df_lp['Gender'].astype('category').cat.codes** to convert categorical feature to numerical one.\n",
+    "\n",
+    "- (1.c) separate the class label (mpg), store mpg as the labels, and divide the data into 80/20 train test split\n",
+    "- (1.d) train linear regression, knn regression, decision tree regression and random forest regression models. Report the performances of each model (e.g. mean squared error (mse), root mse, and r2_score) over the test set."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Question 2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "- (2.a) Perform the tasks in question 1.a, and 1.b\n",
+    "- (2.b) Add a new column to the dataframe, named mpg_binary, which is obtained based on the column \"mpg\" as follows: all the cars with a mpg value lower than 23 has a bad mpg (i.e. class label 0), and all other cars have a good mpg (i.e. class label 1). \n",
+    "- (2.c) separate the class labels (both mpg and mpg_binary), store mpg_binary as the labels and ignore mpg column all together, and divide the data into 80/20 train-test split\n",
+    "- (2.d) Now that we have a binary classification task, perform logistic regression, knn classification, decision tree classification and random forest classification tasks. Report the performances of each model (e.g. accuracy, precision, recall) over the test set."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Libraries"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import math\n",
+    "\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "\n",
+    "from sklearn.metrics import mean_squared_error, r2_score\n",
+    "\n",
+    "from sklearn import datasets, linear_model # linear model includes {LinearRegression, SGDRegressor, Lasso, Ridge, ElasticNet}\n",
+    "from sklearn.ensemble import RandomForestRegressor\n",
+    "from sklearn.tree import DecisionTreeRegressor\n",
+    "from sklearn.gaussian_process import GaussianProcessRegressor\n",
+    "from sklearn.neighbors import KNeighborsRegressor\n",
+    "\n",
+    "from sklearn.metrics import accuracy_score, recall_score, precision_score, classification_report\n",
+    "\n",
+    "from sklearn.linear_model import LogisticRegression\n",
+    "from sklearn.neighbors import KNeighborsClassifier\n",
+    "from sklearn.ensemble import RandomForestClassifier\n",
+    "from xgboost import XGBClassifier\n",
+    "\n",
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "\n",
+    "givenDec = lambda gdVal: float('%.1f' % gdVal) # 1 digit"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 1.a"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# read csv\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 1.b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# convert categorical to numerical\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [],
+   "source": [
+    "# missing values\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 1.c"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# separate the class label\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# get train/test\n",
+    "# setting the random state to 42 which means the results will be the same each time I run the split for reproducible results.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 1.d"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def evaluate_results(gTestLabel, gTestPredictions):\n",
+    "    # your code here\n",
+    "    return "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Linear regression model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "regr = linear_model.LinearRegression()\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### KNN"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "regr = KNeighborsRegressor(n_neighbors=4) # n_neighbors selection is arbitrary\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### DT"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "regr = DecisionTreeRegressor(random_state=42)\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### RF"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "regr = RandomForestRegressor(random_state=42, n_estimators=10)\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 2.a"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# read csv\n",
+    "\n",
+    "# convert categorical to numerical\n",
+    "\n",
+    "# missing values\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 2.b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 2.c"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# separate the class label\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# get train/test\n",
+    "# setting the random state to 42 which means the results will be the same each time I run the split for reproducible results.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Solution 2.d"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def evaluate_results_clf(gtestLabels, gTestPred):\n",
+    "    # your code here\n",
+    "    \n",
+    "    return"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### logR"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "clf = LogisticRegression()\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### kNN"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "clf = KNeighborsClassifier(n_neighbors=4)\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### DT"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "clf = DecisionTreeClassifier()\n",
+    "# your code here"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### RF"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "clf = RandomForestClassifier()\n",
+    "# your code here"
+   ]
+  }
+ ],
+ "metadata": {
+  "@webio": {
+   "lastCommId": null,
+   "lastKernelId": null
+  },
+  "colab": {
+   "name": "Lab1_solutions.ipynb",
+   "provenance": [],
+   "version": "0.3.2"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.5.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

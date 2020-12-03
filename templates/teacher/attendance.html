@@ -4,23 +4,24 @@
 {% block content %}
 <div class="main">
      <div class="container">
-<!--            {% for section in sections %}-->
-<!--          <button>{{section.class_id}}{{ section.section_name }}</button>-->
-<!--            {% endfor %}-->
-<!--            {% for student in students %}-->
-<!--                {{ student.user.username }}-->
-<!--            {% endfor %}-->
          <div class="row">
              <div class="col-md-8">
                  <h1>ATTENDANCE</h1>
              </div>
          </div>
-                 <div class="row">
-                     <div class="col-md-1 alert alert-primary">No.</div>
-                     <div class="col-md-7 alert alert-primary">NAME</div>
-                     <div class="col-md-2 alert alert-primary">PRESENT</div>
-                     <div class="col-md-2 alert alert-primary">ABSENT</div>
-                 </div>
+         {% if mark_attendance == False %}
+         <div class="row">
+             <div class="col-md-12 alert alert-success" role="alert">
+              Today's Attendance is already marked !
+            </div>
+         </div>
+         {% else %}
+         <div class="row">
+             <div class="col-md-1 alert alert-primary">No.</div>
+             <div class="col-md-7 alert alert-primary">NAME</div>
+             <div class="col-md-2 alert alert-primary">PRESENT</div>
+             <div class="col-md-2 alert alert-primary">ABSENT</div>
+         </div>
              <form method="post" action="{% url 'teacher:mark_attendance' %}">
                  {% csrf_token %}
                  {% for student in students %}
@@ -53,6 +54,7 @@
                         </div>
                     </div>
              </form>
+        {% endif %}
      </div>
 </div>
 {% endblock %}

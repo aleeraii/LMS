@@ -26,8 +26,10 @@ table, tr, td {
 
 .content-video-row {
     overflow-x: auto;
+    overflow-y: hidden;
     white-space: nowrap;
     display:block;
+    height:220px;
 
 }
 
@@ -37,6 +39,7 @@ table, tr, td {
     height: 100%;
     width: 100%;
     background-color: #d0d3d4;
+
 }
 
 .content-video > video {
@@ -124,4 +127,15 @@ text-decoration:none;
 
 .section-info {
     display:none;
+}
+
+.main {
+  margin-top:70px;
+  margin-left: 100px;
+  width:75%;
+  transition: 0.5s;
+}
+.navigation:hover + .main{
+    margin-left: 250px;
+     transition: 0.5s;
 }
