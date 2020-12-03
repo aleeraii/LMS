@@ -135,6 +135,8 @@ def todo(request):
 
 def timetable(request):
     timetable = TimeTableModel.objects.all()
+    teacher = TeacherModel.objects.get(user=request.user)
+    sections = SectionModel.objects.filter(class_teacher=teacher)
     return render(request, "teacher/timetable.html", context={'roles': roles, 'timetable': timetable})
 
 

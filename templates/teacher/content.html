@@ -41,7 +41,7 @@
                                  <div class="content-video-row">
                                     {% for video in videos %}
                                     {% if class_id == video.grade and video.subject == teacher_subject %}
-                                        <div class="col-sm-4 content-video-plus-details">
+                                        <div class="col-sm-4 content-video-plus-details" id="{{video.id}}">
                                             <div class="content-video">
                                                 <video width="300" height="100" controls poster="">
                                                     <source src='{{ video.video.url }}' type='video/mp4'>
@@ -66,88 +66,55 @@
           </div>
           {% endfor %}
         </div>
+<!--        #############################SEARCH RESULTS#######################-->
+        <div class="row" id="search-results" style="display:none;">
+            <video width="300" height="300" controls poster="" id="myvideos">
+                <source src='' type='video/mp4'>
+            </video>
+            <div class="content-video-details" id="content-video-details">
+                <h5><b></b></h5>
+            </div>
+                </div>
+            </div>
+        </div>
   </div>
 </div>
-<!--        {% for class_id, subject in classes.items %}-->
-<!--        <div class="row">-->
-<!--            <div class="dropdown">-->
-<!--                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">-->
-<!--                  Class {{class_id}}-->
-<!--                </button>-->
-<!--                <div class="dropdown-menu">-->
-<!--                    <h5 class="dropdown-header">Subjects</h5>-->
-<!--                    {% for teacher_subject in subjects %}-->
-<!--                    {% if teacher_subject.name in subject %}-->
-<!--                        <button type="button" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')" class="dropdown-item" data-toggle="collapse"  aria-expanded="false" >{{teacher_subject.name}}</button>-->
-<!--&lt;!&ndash;                        <a href="#" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')" class="dropdown-item" data-toggle="collapse"  aria-expanded="false" >{{teacher_subject.name}}</a>&ndash;&gt;-->
-<!--                    {% endif %}-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            {% for teacher_subject in subjects %}-->
-<!--            {% if teacher_subject.name in subject %}-->
-<!--            <div class="row content-video-row section-info" id="{{class_id}}{{teacher_subject.name}}">-->
-<!--                {% for video in videos %}-->
-<!--                {% if class_id == video.grade and video.subject == teacher_subject %}-->
-<!--                <div class="alert alert-primary" role="alert" data-toggle="collapse">-->
-<!--                    <b>{{teacher_subject.name}}</b>-->
-<!--                    <a href="#" onclick="videoDetails('{{class_id}}{{teacher_subject.name}}')"><p style="float:right;">Close</p></a>-->
-<!--                </div>-->
-<!--                    <div class="col-sm-4 content-video-plus-details">-->
-<!--                        <div class="content-video">-->
-<!--                            <video width="300" height="200" controls>-->
-<!--                                <source src='{{ video.video.url }}' type='video/mp4'>-->
-<!--                            </video>-->
-<!--                        </div>-->
-<!--                        <div class="content-video-details">-->
-<!--                            <h4><b>{{video.title}}</b></h4>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                {% endif %}-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--            {% endif %}-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--        {% endfor %}-->
-    </div>
-</div>
 <script>
-    function videoDetails(video_id) {
-    if (document.getElementById(video_id)) {
-        var x = document.getElementById(video_id);
-        if (x.style.display === "block") {
-            x.style.display = "none";
-          }
-        else {
-        x.style.display = "block";
-        }
-    }
-}
-
     function searchVideo() {
-        var input, filter, h5, i, j, found, body, txtValue;
-        input = document.getElementById('myInput');
-        console.log(input.value);
+        var x = document.getElementById("accordion");
+        x.style.display = "none";
+
+        var search_result = document.getElementById("search-results");
+        search_result.style.display = "block";
+
+        var input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
-        body = document.getElementsByClassName("card-body");
-        for (i = 0; i < body.length; i++) {
-<!--            td = tr[i].getElementsByTagName("td");-->
-<!--            console.log(body[i]);-->
-            h5 = body[i].getElementsByTagName("h5");
-            for (j = 0; j < h5.length; j++) {
-                if (h5[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
-                }
-            }
-            if (found) {
-                body[0].style.display = "";
-                body[i].style.display = "";
-                found = false;
-            } else {
-                body[i].style.display = "none";
-            }
-        }
+
+        {% for class_id, subject in classes.items %}
+            {% for teacher_subject in subjects %}
+                {% if teacher_subject.name in subject %}
+                    {% for video in videos %}
+                        {% if class_id == video.grade and video.subject == teacher_subject %}
+                        if ('{{video.title}}'.toUpperCase().indexOf(filter) > -1){
+                            console.log('{{video.title}}');
+                            var myvideo = document.getElementById('myvideos');
+                            $("#myvideos > source").attr("src", "{{video.video.url}}");
+                            $("#content-video-details > h5 > b").html("{{video.title}}");
+                            myvideo.load();
+                            }
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+<!--        var video_div = document.getElementsByClassName("content-video-details");-->
+<!--        for (var i=0; i < video_div.length; i++) {-->
+<!--                if (video_div[i].innerHTML.toUpperCase().indexOf(filter) > -1){-->
+<!--                    console.log(video_div[i]);-->
+<!--                    console.log("Found");-->
+<!--                }-->
+
+<!--            }-->
     }
 </script>
 {% endblock %}
