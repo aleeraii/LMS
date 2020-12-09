@@ -2,291 +2,138 @@
 {% block content %}
 <div class="main">
     <div class="container-fluid">
-<!--        FIRST ROW BUTTONS-->
         <div class="row">
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons" >
-                <div class="btn-group ">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="infoFunction()">
-                    INFO
-                  </button>
-                </div>
-                <div id="info_details" class="dashboard-details">
-                        <button disabled class="btn btn-primary btn-lg " style="width:100%;">
-                            {{ user.first_name }} {{ user.last_name }}
-                        </button>
-                    <br>
-                        <button class="btn btn-success btn-lg" style="width:100%;" type="button">
-                            Total Leaves
-                            {% for teacher in teacher_data %}
-                            {% if teacher.user.username == user.username %}
-                            <span class="badge">{{ teacher.leaves }}</span>
-                            {% endif %}
-                            {% endfor %}
-                        </button>
-                    <br>
-                        <button class="btn btn-danger btn-lg" style="width:100%;" type="button">
-                            Leaves Left <span class="badge">4</span>
-                        </button>
-                </div>
-            </div>
-<!--            <div class="col-md-4 col-sm-4 dashboard-home-buttons">-->
-<!--                <div class="btn-group ">-->
-<!--                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="timetableFunction()">-->
-<!--                    TIME TABLE-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--                <div id="timetable_details" class="dashboard-details">-->
-<!--                    <table class="table-responsive timetable-table">-->
-<!--                        <caption>Today</caption>-->
-<!--                        <tr>-->
-<!--                            <td>9:00</td>-->
-<!--                            <td>10:00</td>-->
-<!--                            <td>11:00</td>-->
-<!--                            <td>12:00</td>-->
-<!--                            <td>1:00</td>-->
-<!--                            <td>2:00</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                    <table class="table-responsive timetable-table">-->
-<!--                        <caption>Tomorrow</caption>-->
-<!--                        <tr>-->
-<!--                            <td>9:00</td>-->
-<!--                            <td>10:00</td>-->
-<!--                            <td>11:00</td>-->
-<!--                            <td>12:00</td>-->
-<!--                            <td>1:00</td>-->
-<!--                            <td>2:00</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons">
-                <div class="btn-group">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="noticeboardFunction()">
-                    NOTICE BOARD
-                  </button>
-                </div>
-                <div id="noticeboard_details" class="dashboard-details" style="overflow:scroll; height:200px;">
-                    {% for notice in notices %}
-                    {% if notice.user_group == 'Teacher' %}
-                        <h4>{{notice.date.date}}</h4><p>{{notice.title}}</p>
-                    {% endif %}
-                    {% endfor %}
+            <div class="col-6">
+                <div class="card ">
+                    <div class="card-header">Personal Information</div>
+                    <div class="card-body">
+                        <table class="table table-sm" style="border: none;">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Full Name</th>
+                                    <td>{{teacher_data.user.first_name}} {{teacher_data.user.last_name}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Leaves Allowed</th>
+                                    <td>{{teacher_data.leaves}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Current Salary</th>
+                                    <td>{{teacher_data.pay}} Rupees</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Joining Date</th>
+                                    <td>{{ teacher_data.date_joining.date }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons" >
-                <div class="btn-group">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="todoFunction()">
-                    TO-DO
-                  </button>
-                </div>
-                <div id="todo_details" class="dashboard-details">
-                    <table class="table-responsive timetable-table">
-                        <tr>
-                            <th>Assigned By</th>
-                            <th>Task</th>
-                        </tr>
-                        {% for task in todos %}
-                        <tr>
-                            <td>{{task.assign_by}}</td>
-                            <td>{{task.task}}</td>
-                        </tr>
-                        {%endfor%}
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons">
-                <div class="btn-group ">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="attendanceFunction()">
-                    ATTENDANCE
-                  </button>
-                </div>
-                <div id="attendance_details" class="dashboard-details">ATTENDANCE</div>
-            </div>
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons">
-                <div class="btn-group">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" onclick="queriesFunction()">
-                    QUERIES
-                  </button>
-                </div>
-                <div id="queries_details" class="dashboard-details">QUERIES</div>
-            </div>
-            <div class="col-md-4 col-sm-4 dashboard-home-buttons" >
-                <div class="btn-group">
-                  <button class="btn btn-info btn-lg dashboard-buttons" type="button" >
-                    CLASS
-                  </button>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Noticeboard
+                    </div>
+                    <div class="card-body">
+                        <marquee width="100%" direction="up" height="100px" scrollamount="2">
+                        {% for notice in notices %}
+                            <div class="alert alert-primary">
+                                    {{notice.title}}
+                            </div>
+                        {% endfor %}
+                        </marquee>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Class Attendance
+                    </div>
+                    <div class="card-body">
+                        {% if mark_attendance %}
+                            <div class="alert alert-danger">
+                                    Kindly Mark Today's Attendance
+                            </div>
+                        {% else %}
+                            <table class="table table-sm" style="border: none;">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Section</th>
+                                        <td>{{section}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total Students</th>
+                                        <td>{{total_students}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Present Today</th>
+                                        <td>{{present}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Absent Today</th>
+                                        <td>{{ absent }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Today's TODOs
+                    </div>
+                    <div class="card-body">
+                        <div style="overflow:auto;height:200px;">
+                        {% for task in todos %}
+                            <div class="alert alert-warning" style="width:80%;">
+                                {{task.task}}<br><b class="small">{{task.assign_by}}</b>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Class Progress
+                    </div>
+                    <div class="card-body">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%">1 A</div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width:90%">5 B</div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width:100%">1 C3</div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:55%">6 A</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Queries
+                    </div>
+                    <div class="card-body">
+                        <div id="attendanceChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-<script>
-    function infoFunction() {
-  var x = document.getElementById("info_details");
-  if (x.style.display === "block") {
-    x.style.display = "none";
-  } else {
-    x.style.display = "block";
-  }
-}
-    function timetableFunction() {
-  var x = document.getElementById("timetable_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-    function noticeboardFunction() {
-  var x = document.getElementById("noticeboard_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-    function todoFunction() {
-  var x = document.getElementById("todo_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-    function attendanceFunction() {
-  var x = document.getElementById("attendance_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-    function queriesFunction() {
-  var x = document.getElementById("queries_details");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-</script>
-
-
-
-
-
-
-
-<!--    {% if user.user_role == 'Teacher' %}-->
-<!--    <button disabled class="btn btn-lg">{{ user.first_name }} {{ user.last_name }}</button>-->
-<!--    {% if user.is_authenticated %}-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-2">-->
-<!--            <h3>Name</h3>-->
-<!--            <h3>Username</h3>-->
-<!--            <h3>Address</h3>-->
-<!--        </div>-->
-<!--        <div class="col-md-4">-->
-<!--            <h3>{{ user.first_name }} {{ user.last_name }}</h3>-->
-<!--            <h3>{{ user.username }}</h3>-->
-<!--            <h3>{{ user.address }}</h3>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <br>-->
-<!--    <div class="row">-->
-<!--        <div class="col-md-6">-->
-<!--            <div class="panel panel-primary">-->
-<!--                <div class="panel-heading">-->
-<!--                    <h3 class="panel-title">Performance Graph</h3>-->
-<!--                </div>-->
-<!--                <div class="panel-body">-->
-<!--                    <div id="curve_chart" style="width: 550px; height: 400px"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--            <div class="panel panel-success">-->
-<!--                <div class="panel-heading">-->
-<!--                    <h3 class="panel-title">Notice Board</h3>-->
-<!--                </div>-->
-<!--                <div class="panel-body">-->
-<!--                    Panel Body-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--            <div class="panel panel-danger">-->
-<!--                <div class="panel-heading">-->
-<!--                    <h3 class="panel-title">Attendace</h3>-->
-<!--                </div>-->
-<!--                <div class="panel-body">-->
-<!--                    <div id="piechart"></div>-->
-
-<!--                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
-
-<!--                    <script type="text/javascript">-->
-<!--                        // Load google charts-->
-<!--                        google.charts.load('current', { 'packages': ['corechart'] });-->
-<!--                        google.charts.setOnLoadCallback(drawChart);-->
-
-<!--                        // Draw the chart and set the chart values-->
-<!--                        function drawChart() {-->
-<!--                            var data = google.visualization.arrayToDataTable([-->
-<!--                                ['Task', 'Hours per Day'],-->
-<!--                                ['Present', 8],-->
-<!--                                ['Absent', 2],-->
-<!--                                ['Leave', 2],-->
-<!--                            ]);-->
-
-<!--                            // Optional; add a title and set the width and height of the chart-->
-<!--                            var options = { 'width': 550, 'height': 400 };-->
-
-<!--                            // Display the chart inside the <div> element with id="piechart"-->
-<!--                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));-->
-<!--                            chart.draw(data, options);-->
-<!--                        }-->
-<!--                    </script>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="col-md-6">-->
-<!--            <div class="panel panel-warning">-->
-<!--                <div class="panel-heading">-->
-<!--                    <h3 class="panel-title">LMS Performance</h3>-->
-<!--                </div>-->
-<!--                <div class="panel-body">-->
-<!--                    Panel Body-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    {% endif %}-->
-<!--    {% endif %}-->
-</div>
-<!--<script type="text/javascript">-->
-<!--    google.charts.load('current', { 'packages': ['corechart'] });-->
-<!--    google.charts.setOnLoadCallback(drawChart);-->
-
-<!--    function drawChart() {-->
-<!--        var data = google.visualization.arrayToDataTable([-->
-<!--            ['Monthly', 'Result', 'Attendance'],-->
-<!--            ['Jan', 1000, 400],-->
-<!--            ['Feb', 1170, 460],-->
-<!--            ['March', 660, 1120],-->
-<!--            ['April', 1030, 540]-->
-<!--        ]);-->
-
-<!--        var options = {-->
-<!--            curveType: 'function',-->
-<!--            legend: { position: 'bottom' }-->
-<!--        };-->
-
-<!--        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));-->
-
-<!--        chart.draw(data, options);-->
-<!--    }-->
-<!--</script>-->
-
 {% endblock content %}

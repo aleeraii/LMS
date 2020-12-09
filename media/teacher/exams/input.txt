@@ -1,0 +1,7 @@
+91007#  Ahmad    Said#    50.0  78.5   73.2
+91004#  Hassan  Khan#    45.5    36.7   88.5
+91003#  Suleiman Wasim# 72.6  66.4   56.7
+91002#  Majed  Sameer#     60.0  78.4   45.6  
+91006#  Muhammad  Adel# 85.5  69.8  44.5
+91005#  Muhsim Zuheir#      70.0  62.1 95.4
+91001#  Muneeb  Abdullatif#  30.0 56.5  44.8

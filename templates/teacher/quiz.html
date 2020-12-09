@@ -40,7 +40,7 @@
                         <td>{{ val.section }}</td>
                         <td>{{ val.date.date }}</td>
                         <td><a href="{{ val.file.url }}" class="btn btn-sm btn-primary"><i class="far fa-eye"></i></a>
-                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="{% url 'teacher:delete_quiz' val.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                         </td>
                       </tr>
                 {% endfor %}

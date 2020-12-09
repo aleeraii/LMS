@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     # custom apps
     'accounts.apps.AccountsConfig',
     'owner.apps.OwnerConfig',
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'timetable',
     'todo',
+    'queries',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
@@ -121,7 +123,7 @@ else:
             'CONN_MAX_AGE': 0,
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'HOST': 'localhost',
-            'NAME': 'LMS-DB',
+            'NAME': 'LMS-TEST',
             'USER': 'postgres',
             'PASSWORD': 'asdf1234',
             'PORT': '5432',

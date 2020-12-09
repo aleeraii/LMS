@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_template_tag %}
+
+{% block content %}
+<div class="main">
+    <div class="container-fluid">
+        <div id="hide-me">
+            <div class="row" >
+                <div class="col-md-8 col-sm-8 col-lg-8">
+                    <h2>Queries</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm-12 col-lg-12 col-md-12">
+                    <table class="table">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Asked By</th>
+                          <th scope="col">Query</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for query in queries reversed %}
+                      {% if query.status == 'Question'%}
+                        <tr>
+                            <td>{{query.asked_by.username}}</td>
+                            <td>
+                                <a href="#" data-toggle="modal" onclick="showQuery('{{query.subject}}-id')" style="text-decoration:none;">
+                                    {{query.chat}}
+                                </a>
+                            </td>
+                        </tr>
+                      {% endif %}
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+{% for student, subjects  in data.items %}
+{% for subject in subjects %}
+<form method="post"  enctype="multipart/form-data" action="{% url 'teacher:ask_query' student.id %}">
+            {% csrf_token %}
+            <div id="{{subject}}-id" style="display:none;">
+                <div class="row modal-header">
+                    <div class="col-md-8 col-sm-8 col-lg-8">
+                        <h2>{{subject}}</h2>
+                    </div>
+                </div>
+                <div class="row modal-body">
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        {% for query in queries %}
+                        {% if query.asked_by.username == student.username and query.subject == subject %}
+                        {% setvar query.query_status as temp %}
+                        <input type="hidden" value="{{query.subject}}" name="subject">
+                        <div class="border-bottom">
+                            <a href="#" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="avatar">
+                                {% if query.status == 'Question'%}
+                                {{query.asked_by}}
+                                {% elif query.status == 'Response'%}
+                                {{query.asked_to}}
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            {{query.chat}}
+                        </div>
+                        <script type="text/javascript" language="JavaScript">
+                            hide_div("{{temp}}");
+                        </script>
+                        {% endif %}
+                        {% endfor %}
+                        <div id="query-typing-area">
+                            <input name="message" class="mytext" placeholder="Type a message... " style="height:50px;width:100%;"/>
+                            <input name="myfile" type="file"/>
+                            <span>
+                                <input class="form-check-input" type="checkbox" name="query_status" id="query_status" value="0" >
+                                <label for="query_status">Select this option if you want to close this query</label>
+                            </span>
+                            <button type="submit" class="btn btn-secondary" style="height:50px;width:100%;">Send</button>
+                        </div>
+                        <div id="query-typing-area-message" style="display:none;">
+                            <div class="alert alert-warning" role="alert">
+                              Matter Closed !
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+</form>
+{% endfor%}
+{% endfor %}
+
+
+
+    </div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+    function showQuery(id) {
+        var x = document.getElementById("hide-me");
+        x.style.display = "none";
+
+        var search_result = document.getElementById(id);
+        search_result.style.display = "block";
+    }
+    function hide_div(temp){
+        console.log(temp);
+    }
+</script>
+
+
+{% endblock content %}
