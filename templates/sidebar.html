@@ -1,5 +1,6 @@
 <div class="navigation">
     <ul>
+        <h1>Side bar</h1>
         {% for role in roles %}
         {% with user.user_role|add:"/roles/"|add:role|add:".html" as template %}
         {% include template %}
