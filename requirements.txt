@@ -1,0 +1,6 @@
+Django==2.1.1
+django-summernote==0.8.11.6
+django-widget-tweaks==1.4.8
+Pillow==8.0.1
+psycopg2-binary==2.8.6
+pytz==2020.1

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        {% include 'forms.html' %}
+        <button type="submit" class="btn btn-success btn btn-block">Create School
+        </button>
+    </form>
+</div>
+
+{% endblock content %}

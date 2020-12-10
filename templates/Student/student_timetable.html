@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-light btn-lg" disabled>Time Table for {{section}}</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="container ">
+                    <img src="{{ timetable.image.url }}" class="img-fluid" alt="Responsive image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

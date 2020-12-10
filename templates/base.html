@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    <title>LMS</title>
+    {% endblock title %}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'main/navbar.css' %}">
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    {% block navbar %}
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">{{school}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li> -->
+
+            </ul>
+
+
+            <ul class="navbar-nav my-2 my-lg-0 mr-5">
+                <li class="nav-item dropdown">
+                    <div class="btn-group pull-right top-head-dropdown">
+                        <button type="button" class="btn btn-dark  dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-bell"></i> <span class="caret">2</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">You have <b>3 new themes</b> trending</div>
+                                    <div class="top-text-light">15 minutes ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">New asset recommendations in <b>Gaming Laptop</b>
+                                    </div>
+                                    <div class="top-text-light">2 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">New asset recommendations in <b>5 themes</b></div>
+                                    <div class="top-text-light">4 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">Assets specifications modified in themes</div>
+                                    <div class="top-text-light">4 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">We crawled <b>www.dell.com</b> successfully</div>
+                                    <div class="top-text-light">5 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">Next crawl scheduled on <b>10 Oct 2016</b></div>
+                                    <div class="top-text-light">6 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">You have an update for <b>www.dell.com</b></div>
+                                    <div class="top-text-light">7 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading"><b>"Gaming Laptop"</b> is now trending</div>
+                                    <div class="top-text-light">7 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="top-text-block">
+                                    <div class="top-text-heading">New asset recommendations in <b>Gaming Laptop</b>
+                                    </div>
+                                    <div class="top-text-light">7 hours ago</div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="loader-topbar"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="avatar">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'password_change' %}">change password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    {% endblock %}
+    {% endif %}
+    <!-- sidebar -->
+    {% block sidebar %}
+    {% if user.is_authenticated %}
+    {% include 'sidebar.html' %}
+    {% endif %}
+    <div class="main">
+        {% block messages %}
+
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endblock messages %}
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% endblock sidebar %}
+    <!-- sidebar -->
+
+    </div>
+
+
+    <!-- form -->
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{% static 'js/performance.js' %}"></script>
+
+</body>
+
+</html>
